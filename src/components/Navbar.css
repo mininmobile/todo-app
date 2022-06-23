@@ -1,0 +1,39 @@
+nav {
+	padding: 0 .5rem;
+	height: 3rem;
+	display: flex;
+	align-items: stretch;
+	justify-content: space-between;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #1c1c1c;
+}
+
+nav > a {
+	flex-grow: 1;
+	font-size: 1.4rem;
+}
+
+nav ul {
+	margin: 0;
+	display: flex;
+	align-items: stretch;
+	justify-content: space-between;
+}
+
+nav a {
+	padding: 0 1rem;
+	color: white;
+	display: flex;
+	align-items: center;
+}
+
+nav ul a.active {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+nav ul a:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
