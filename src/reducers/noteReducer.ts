@@ -1,6 +1,6 @@
 import * as uuid from "uuid";
 
-interface Note {
+export interface Note {
 	id?: string,
 	title?: string,
 	description?: string,
@@ -11,7 +11,11 @@ interface NoteAction {
 	payload: Note,
 }
 
-const InitialState:Note[] = []
+const InitialState:Note[] = [
+	{id: uuid.v4(), title: "Hello, World!", description: "this is my first note."},
+	{id: uuid.v4(), title: "oooo eee aaaa", description: "this is my second note."},
+	{id: uuid.v4(), title: "oh no.", description: "this is my third note."},
+]
 
 export function noteReducer (state:Note[] = InitialState, action:NoteAction) {
 	switch (action.type) {
@@ -34,10 +38,7 @@ export function noteReducer (state:Note[] = InitialState, action:NoteAction) {
 				} else return x;
 			});
 		case "NOTE_REMOVE":
-			return {
-				...state,
-				notes: state.filter(x => x.id !== action.payload.id),
-			}
+			return state.filter(x => x.id !== action.payload.id);
 		default:
 			return state;
 	}
@@ -59,7 +60,7 @@ export function removeNote(id: string): NoteAction {
 		payload: {
 			id,
 		}
-	}
+	};
 }
 
 export function editNote(id: string, newTitle?: string, newDescription?: string): NoteAction{
