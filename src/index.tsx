@@ -22,10 +22,10 @@ root.render(
 				<Navbar />
 				<div className="container">
 					<Routes>
-						<Route path="/" element={<App />}>
-							<Route path="new" element="" />      {/* new note dialog */}
-							<Route path="edit/:id" element="" /> {/* edit note dialog */}
-						</Route>
+						<Route path="/" element={<App />} />
+						<Route path="/new" element={<App dialog="NEW" />} />
+						<Route path="/edit/:id" element={<App dialog="EDIT" />} />
+
 						<Route path="/about" element={<About />} />
 						<Route path="/*" element={<InvalidPage />} />
 					</Routes>

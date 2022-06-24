@@ -1,0 +1,31 @@
+.dialog-wrapper {
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, .5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	transition: opacity .3s;
+}
+
+.dialog-wrapper.open {
+	opacity: initial;
+	pointer-events: initial;
+	-webkit-user-select: initial;
+	   -moz-user-select: initial;
+	        user-select: initial;
+}
+
+.dialog {
+	background: white;
+	width: 60vw;
+	height: 90vh;
+}
