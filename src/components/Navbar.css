@@ -1,4 +1,4 @@
-nav {
+.navbar {
 	padding: 0 .5rem;
 	height: 3rem;
 	display: flex;
@@ -11,29 +11,32 @@ nav {
 	background: #1c1c1c;
 }
 
-nav > a {
-	flex-grow: 1;
+.navbar__title {
+	padding: 0 1rem;
+	color: white;
 	font-size: 1.4rem;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
 }
 
-nav ul {
-	margin: 0;
+.navbar__links {
 	display: flex;
 	align-items: stretch;
 	justify-content: space-between;
 }
 
-nav a {
+.navbar__link {
 	padding: 0 1rem;
 	color: white;
 	display: flex;
 	align-items: center;
 }
 
-nav ul a.active {
+.navbar__link__active {
 	background: rgba(255, 255, 255, 0.1);
 }
 
-nav ul a:hover {
+.navbar__link:hover {
 	background: rgba(255, 255, 255, 0.2);
 }
