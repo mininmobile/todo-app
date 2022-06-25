@@ -1,4 +1,4 @@
-import { MouseEventHandler, useCallback, useState } from "react";
+import { cloneElement, MouseEventHandler, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dialog.css";
 
@@ -32,7 +32,7 @@ const Dialog: React.FC<DialogProps> = ({ element, open = 1 }) => {
 	return (
 		<div onClick={handleWrapperClick} className={dialogState.open == 1 ? "dialog-wrapper open" : "dialog-wrapper"}>
 			<div className="dialog">
-				{element}
+				{cloneElement(element, { onClose: handleClose })}
 			</div>
 		</div>
 	)

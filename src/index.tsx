@@ -24,6 +24,7 @@ root.render(
 					<Routes>
 						<Route path="/" element={<App />} />
 						<Route path="/new" element={<App dialog="NEW" />} />
+						<Route path="/edit" element={<App dialog="NEW" />} />
 						<Route path="/edit/:id" element={<App dialog="EDIT" />} />
 
 						<Route path="/about" element={<About />} />
