@@ -11,7 +11,7 @@ a {
 
 .container {
 	width: 55%;
-	margin: 2rem auto;
+	margin: 2rem auto 7rem auto;
 }
 
 @media (max-aspect-ratio: 4/3) {
