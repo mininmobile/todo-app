@@ -19,13 +19,13 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 	const { id } = useParams();
 	useEffect(() => {
 		if (type === "EDIT" && id) {
-			let note = notes.find(x => x.id == id);
+			let note = notes.find(x => x.id === id);
 			if (note) {
 				setTitle(note.title ?? "");
 				setDescription(note.description ?? "");
 			}
 		}
-	}, []);
+	}, [notes, id, type]);
 
 	const onNewAction = (title: string, description: string) => {
 		dispatch(addNote(title, description));
@@ -36,7 +36,7 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 	}
 
 	const handleSubmit = () => {
-		if (type === "EDIT" && id && notes.find(x => x.id == id))
+		if (type === "EDIT" && id && notes.find(x => x.id === id))
 			onEditAction(id, title, description)
 		else
 			onNewAction(title, description);

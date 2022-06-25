@@ -15,7 +15,7 @@ const Dialog: React.FC<DialogProps> = ({ element, open = 1 }) => {
 	const [dialogState, setDialogState] = useState({ open: 0 });
 	const setOpen = useCallback((o: number) => setDialogState({ open: o }), []);
 
-	if (dialogState.open == 0 && open == 1)
+	if (dialogState.open === 0 && open === 1)
 		setTimeout(() => setOpen(1), 1);
 
 	const handleClose = () => {
@@ -25,12 +25,12 @@ const Dialog: React.FC<DialogProps> = ({ element, open = 1 }) => {
 
 	// close if user clicks outside the dialog
 	const handleWrapperClick: MouseEventHandler = (e) => {
-		if (e.target == e.currentTarget)
+		if (e.target === e.currentTarget)
 		handleClose();
 	}
 
 	return (
-		<div onClick={handleWrapperClick} className={dialogState.open == 1 ? "dialog-wrapper open" : "dialog-wrapper"}>
+		<div onClick={handleWrapperClick} className={dialogState.open === 1 ? "dialog-wrapper open" : "dialog-wrapper"}>
 			<div className="dialog">
 				{cloneElement(element, { onClose: handleClose })}
 			</div>
