@@ -46,13 +46,16 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 
 	return (
 		<>
-			<input className="form__text" placeholder="Title" value={title ?? ""}
+			<input className="form__input form__input-title" placeholder="Title" value={title ?? ""}
 				onChange={(e) => setTitle(e.currentTarget.value)}/>
-			<textarea className="form__textarea" placeholder="Description" value={description ?? ""}
+			<textarea className="form__input form__textarea" placeholder="Description" value={description ?? ""}
 				onChange={(e) => setDescription(e.currentTarget.value)} />
 
-			<div className="form__button" onClick={onClose!}>Cancel</div>
-			<div className="form__button" onClick={handleSubmit}>{type === "NEW" ? "Add Note" : "Save Changes"}</div>
+			<div className="form__button-list">
+				<div className="form__input form__button" onClick={onClose!}>Cancel</div>
+				<div className="form__input form__button form__button-highlighted" onClick={handleSubmit}>
+					{type === "NEW" ? "Add Note" : "Save Changes"}</div>
+			</div>
 		</>
 	)
 }

@@ -25,7 +25,70 @@
 }
 
 .dialog {
-	background: white;
 	width: 60vw;
-	height: 90vh;
+	height: 80vh;
+	padding: 1.5rem;
+	background: white;
+	border-radius: .33rem;
+	box-shadow: 0 .1rem .5rem rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+/* dialog forms */
+
+.form__input {
+	margin: 0;
+	padding: .5rem;
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: .33rem;
+	transition: border .15s;
+}
+
+.form__input:hover {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.form__input:active, .form__input:focus {
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.form__input-title {
+	font-size: 1.5rem;
+}
+
+.form__textarea {
+	flex-grow: 1;
+	resize: none;
+	font-family: sans-serif;
+}
+
+/* buttons! */
+
+.form__button-list {
+	display: flex;
+	gap: 1rem;
+	justify-content: right;
+}
+
+.form__button {
+	background: rgba(0, 0, 0, 0.1);
+	user-select: none;
+	/* maintain similar sizing to other elements with borders */
+	border: 1px solid transparent !important;
+}
+
+.form__button:hover {
+	background: rgba(0, 0, 0, 0.15);
+}
+
+.form__button-highlighted {
+	background: #1c1c1c;
+	color: white;
+}
+
+.form__button-highlighted:hover {
+	background: #101010;
 }
