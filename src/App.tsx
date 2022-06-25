@@ -26,10 +26,15 @@ const App: React.FC<AppProps> = ({ action }) => {
 	}
 
 	// context menu stuff
-	const [menu, setMenu] = useState<MenuDropdownProps>({ open:false, menu: [] });
+	const closedMenuState: MenuDropdownProps = { open: false, x: 0, y: 0, menu: [] }
+	const [menu, setMenu] = useState(closedMenuState);
 	document.addEventListener("mouseup", (e) => {
-		if (menu.open)
-			setMenu({ open: false, menu: [] });
+		if (menu.open) {
+			setMenu(closedMenuState);
+
+			// defocus responsible menu button
+			document.getElementsByClassName("menu-button focus")[0]?.classList.remove("focus");
+		}
 	});
 
 	return (
@@ -47,7 +52,7 @@ const App: React.FC<AppProps> = ({ action }) => {
 				</Fragment>)}
 
 			{/* render dropdown menu, if there is one */}
-			{menu.open && <MenuDropdown menu={menu.menu} />}
+			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}
 			{/* handle dialogs */}
 			{action ? <Dialog element={<FormNote type={action} />} /> : "" }
 		</>

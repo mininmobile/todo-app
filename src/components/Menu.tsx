@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import "./Menu.css";
 
 interface MenuButtonProps {
@@ -6,12 +7,24 @@ interface MenuButtonProps {
 }
 
 export const MenuButton: React.FC<MenuButtonProps> = ({ menu, setContextMenuState }) => {
+	const button = createRef<HTMLDivElement>();
+
 	const handleOpenMenu = () => {
-		setContextMenuState({ open: true, menu: menu });
+		if (!button.current)
+			return;
+
+		setContextMenuState({
+			open: true, menu: menu,
+			x: button.current.offsetLeft + button.current.offsetWidth,
+			y: button.current.offsetTop + button.current.offsetHeight,
+		});
+
+		// focus responsible menu button
+		button.current.classList.add("focus");
 	}
 
 	return (
-		<div className="menu-button"
+		<div ref={button} className="menu-button"
 			onClick={handleOpenMenu}>
 			≡
 		</div>
@@ -20,14 +33,16 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, setContextMenuStat
 
 export interface MenuDropdownProps {
 	open?: boolean,
+	x: number,
+	y: number,
 	menu: Array<[string, () => void]>,
 }
 
-export const MenuDropdown:React.FC<MenuDropdownProps> = ({ menu }) => {
+export const MenuDropdown:React.FC<MenuDropdownProps> = ({ menu, x, y }) => {
 	return (
-		<div className="menu-dropdown">
+		<div className="menu-dropdown" style={{ left: x, top: y, }}>
 			{menu.map((item, i) =>
-				<a key={i} onMouseUp={item[1]} className="menu-dropdown__item">{item[0]}</a>)}
+				<div key={i} onMouseUp={item[1]} className="menu-dropdown__item">{item[0]}</div>)}
 		</div>
 	);
 }
