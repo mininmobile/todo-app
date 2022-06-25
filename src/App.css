@@ -1,8 +1,6 @@
 .note-bar, .note-card {
 	margin: 2rem 0;
 	padding: 1.5rem;
-	display: flex;
 	border-radius: .33rem;
 	box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.15);
-	display: flex;
 }

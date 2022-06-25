@@ -20,7 +20,7 @@ root.render(
 		<Provider store={store}>
 			<BrowserRouter>
 				<Navbar />
-				<div className="container">
+				<div id="container" className="container">
 					<Routes>
 						<Route path="/" element={<App />} />
 						<Route path="/new" element={<App action="NEW" />} />

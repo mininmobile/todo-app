@@ -1,0 +1,15 @@
+.note-card__title {
+	margin: 1rem 0;
+	font-size: 1.4rem;
+	display: block;
+}
+
+.note-card__description {
+	margin: 1rem 0;
+	display: block;
+}
+
+.note-card__actions {
+	display: flex;
+	justify-content: right;
+}
