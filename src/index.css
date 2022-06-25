@@ -10,5 +10,19 @@ a {
 }
 
 .container {
-	margin: 2rem;
+	width: 55%;
+	margin: 2rem auto;
+}
+
+@media (max-aspect-ratio: 4/3) {
+	.container {
+		width: 70%;
+	}
+}
+
+@media (orientation: portrait) {
+	.container {
+		width: unset;
+		margin: 2rem;
+	}
 }

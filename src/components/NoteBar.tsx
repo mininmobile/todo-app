@@ -6,9 +6,7 @@ const NoteBar:React.FC = () => {
 		<div className="note-bar">
 			<div className="note-bar__text">Take Note</div>
 			<div className="note-bar__buttons">
-				<div className="note-bar__new-note">
-					<Link to="/new">+</Link>
-				</div>
+				<Link to="/new" className="note-bar__button note-bar__new-note">+</Link>
 			</div>
 		</div>
 	)

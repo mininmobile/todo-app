@@ -8,10 +8,10 @@ import NoteCard from "./components/NoteCard";
 import { Note, removeNote } from "./reducers/noteReducer";
 
 interface AppProps {
-	dialog?: "NEW" | "EDIT",
+	action?: "NEW" | "EDIT",
 }
 
-const App: React.FC<AppProps> = ({ dialog }) => {
+const App: React.FC<AppProps> = ({ action }) => {
 	const notes = useSelector<Note[], Note[]>(state => state);
 	const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 	}
 
 	return (
-		<div className="notes-view">
+		<>
 			<NoteBar />
 			{notes.map((note) =>
 				<Fragment key={note.id!}>
@@ -32,8 +32,8 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 				</Fragment>)}
 
 			{/* handle dialogs */}
-			{dialog ? <Dialog element={<FormNote type={dialog} />} /> : "" }
-		</div>
+			{action ? <Dialog element={<FormNote type={action} />} /> : "" }
+		</>
 	);
 }
 
