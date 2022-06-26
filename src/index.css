@@ -23,6 +23,6 @@ a {
 @media (orientation: portrait) {
 	.container {
 		width: unset;
-		margin: 2rem;
+		margin: 2rem 1rem 7rem 1rem;
 	}
 }

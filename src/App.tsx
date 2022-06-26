@@ -47,8 +47,7 @@ const App: React.FC<AppProps> = ({ action }) => {
 					description={note.description!}
 					deleteAction={() => onDeleteAction(note.id!)}
 					navigateAction={navigate}
-					setContextMenuState={setMenu}/>
-				)}
+					setContextMenuState={setMenu}/>)}
 
 			{/* render dropdown menu, if there is one */}
 			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}

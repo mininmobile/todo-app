@@ -11,7 +11,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, setContextMenuStat
 
 	const handleOpenMenu = () => {
 		if (!button.current)
-			return;
+			return; // fail silently
 
 		setContextMenuState({
 			open: true, menu: menu,

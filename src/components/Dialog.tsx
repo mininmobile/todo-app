@@ -35,7 +35,7 @@ const Dialog: React.FC<DialogProps> = ({ element, open = 1 }) => {
 				{cloneElement(element, { onClose: handleClose })}
 			</div>
 		</div>
-	)
+	);
 }
 
 export default Dialog;

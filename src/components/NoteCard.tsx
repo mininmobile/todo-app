@@ -1,5 +1,4 @@
 import { NavigateFunction } from "react-router-dom";
-import "./NoteCard.css";
 import { MenuButton, MenuDropdownProps } from "./Menu";
 
 interface NoteCardProps {
@@ -24,7 +23,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, deleteActio
 				]}/>
 			</div>
 		</div>
-	)
+	);
 }
 
 export default NoteCard;

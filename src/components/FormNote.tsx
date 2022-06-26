@@ -57,7 +57,7 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 					{type === "NEW" ? "Add Note" : "Save Changes"}</div>
 			</div>
 		</>
-	)
+	);
 }
 
 export default FormNote;
