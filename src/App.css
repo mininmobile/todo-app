@@ -30,7 +30,11 @@
 	border-radius: 50%;
 	text-align: center;
 	line-height: 2.5rem;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
 	transition: background .15s;
+
 }
 
 .note-bar__button:hover {
@@ -62,7 +66,9 @@
 	position: relative;
 	opacity: .5;
 	pointer-events: none;
-	cursor: default;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
 }
 
 .note-search-info::before, .note-search-info::after {
