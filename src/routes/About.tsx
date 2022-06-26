@@ -5,10 +5,13 @@ const About: React.FC = () => {
 			<p>This is an example todo app.<br />Technologies used:</p>
 			<ul>
 				<li>React</li>
+				<li>React Router</li>
 				<li>Redux</li>
+				<li>Redux Toolkit</li>
 				<li>Typescript</li>
-				<li>hope.</li>
 			</ul>
+			<h2>Documentation</h2>
+			<p>Visit the <a className="link" target="_blank" rel="noreferrer" href="https://github.com/mininmobile/todo-app">GitHub repository</a>.</p>
 		</>
 	)
 }

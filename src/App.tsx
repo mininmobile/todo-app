@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
@@ -8,6 +8,7 @@ import FormNote from "./components/FormNote";
 import NoteBar from "./components/NoteBar";
 import NoteCard from "./components/NoteCard";
 import { fetchNotes, Note, removeNote } from "./reducers/noteReducer";
+import SearchContext from "./contexts/SearchContext";
 
 interface AppProps {
 	action?: "NEW" | "EDIT",
@@ -40,17 +41,30 @@ const App: React.FC<AppProps> = ({ action }) => {
 		}
 	});
 
+	// search bar stuff
+	const { searchQuery } = useContext(SearchContext);
+	const escapeRegExp = (string: string) => {
+		return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	}
+
 	return (
 		<>
 			<NoteBar />
-			{notes.map((note) =>
-				<NoteCard key={note.id!}
-					id={note.id!}
-					title={note.title!}
-					description={note.description!}
-					deleteAction={() => onDeleteAction(note.id!)}
-					navigateAction={navigate}
-					setContextMenuState={setMenu}/>)}
+			{notes
+				.filter(note => {
+					if (searchQuery.length > 0) {
+						return (
+							new RegExp(escapeRegExp(searchQuery), "g").test(note.title!)
+							|| new RegExp(escapeRegExp(searchQuery), "g").test(note.description!) );
+					} else return true;
+				}).map(note =>
+					<NoteCard key={note.id!}
+						id={note.id!}
+						title={note.title!}
+						description={note.description!}
+						deleteAction={() => onDeleteAction(note.id!)}
+						navigateAction={navigate}
+						setContextMenuState={setMenu}/>)}
 
 			{/* render dropdown menu, if there is one */}
 			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}

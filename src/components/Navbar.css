@@ -15,13 +15,13 @@
 	padding: 0 1rem;
 	color: white;
 	line-height: 2.75;
+	cursor: pointer;
 }
 
 .navbar__title {
 	font-size: 1.4rem;
 	font-weight: bold;
 	line-height: 2;
-	flex-grow: 1;
 }
 
 .navbar__links {
@@ -30,10 +30,39 @@
 	justify-content: space-between;
 }
 
-.navbar__link__active {
+.navbar__link.active {
 	background: rgba(255, 255, 255, 0.1);
 }
 
 .navbar__link:hover {
 	background: rgba(255, 255, 255, 0.2);
+}
+
+/* searchbar */
+
+.searchbar {
+	padding: 0 1rem;
+	color: white;
+	line-height: 2.75;
+	cursor: pointer;
+}
+
+.searchbar.active {
+	cursor: text;
+}
+
+.searchbar__input {
+	width: 4rem;
+	padding: .5rem 1rem;
+	color: white;
+	outline: none;
+	border: none;
+	background: rgba(255, 255, 255, 0.1);
+	cursor: pointer;
+	border-radius: 5rem;
+}
+
+.searchbar.active .searchbar__input {
+	width: 12rem;
+	cursor: text;
 }
