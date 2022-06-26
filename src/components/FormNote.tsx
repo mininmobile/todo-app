@@ -28,11 +28,11 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 	}, [notes, id, type]);
 
 	const onNewAction = (title: string, description: string) => {
-		dispatch(addNote(title, description));
+		addNote(dispatch, title, description);
 	}
 
 	const onEditAction = (id: string, title: string, description: string) => {
-		dispatch(editNote(id, title, description));
+		editNote(dispatch, id, title, description);
 	}
 
 	const handleSubmit = () => {

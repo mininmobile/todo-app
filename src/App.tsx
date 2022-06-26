@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
@@ -7,7 +7,7 @@ import Dialog from "./components/Dialog";
 import FormNote from "./components/FormNote";
 import NoteBar from "./components/NoteBar";
 import NoteCard from "./components/NoteCard";
-import { Note, removeNote } from "./reducers/noteReducer";
+import { fetchNotes, Note, removeNote } from "./reducers/noteReducer";
 
 interface AppProps {
 	action?: "NEW" | "EDIT",
@@ -17,12 +17,16 @@ const App: React.FC<AppProps> = ({ action }) => {
 	const notes = useSelector<Note[], Note[]>(state => state);
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		fetchNotes(dispatch);
+	}, [dispatch]);
+
 	// stuff that is passed down to each NoteCard bc react deems it so
 	// don't really have to pass useNavigate down but it's a bit of an optimization
 	const navigate = useNavigate();
 
 	const onDeleteAction = (id: string) => {
-		dispatch(removeNote(id));
+		removeNote(dispatch, id);
 	}
 
 	// context menu stuff

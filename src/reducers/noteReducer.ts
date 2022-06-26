@@ -1,3 +1,4 @@
+import { Dispatch } from "@reduxjs/toolkit";
 import * as uuid from "uuid";
 
 export interface Note {
@@ -6,28 +7,30 @@ export interface Note {
 	description?: string,
 }
 
+interface NoteActionLoad {
+	type: "NOTE_LOAD",
+	payload: Note[],
+}
+
 interface NoteAction {
 	type: "NOTE_ADD" | "NOTE_REMOVE" | "NOTE_EDIT",
 	payload: Note,
 }
 
 // reuse generated uuids for debug sake
-const InitialState:Note[] = [
-	{id: "2613e584-d2ca-4fd1-a155-2271d7d26b4d", title: "Hello, World!", description: "this is my first note."},
-	{id: "f7676bdf-0395-4403-b42f-ced2b6218e11", title: "oooo eee aaaa", description: "this is my second note."},
-	{id: "b381c961-969e-4964-9fec-caa5ec21eec8", title: "oh no.", description: "this is my third note."},
-]
+const InitialState:Note[] = []
 
-export function noteReducer (state:Note[] = InitialState, action:NoteAction) {
+export function noteReducer (state: Note[] = InitialState, action: NoteActionLoad | NoteAction) {
 	switch (action.type) {
+		case "NOTE_LOAD":
+			return action.payload;
 		case "NOTE_ADD":
 			return [
 				...state,
-				{
-					...action.payload,
-					id: uuid.v4(),
-				}
+				action.payload
 			]
+		case "NOTE_REMOVE":
+			return state.filter(x => x.id !== action.payload.id);
 		case "NOTE_EDIT":
 			return state.map(x => {
 				if (x.id === action.payload.id) {
@@ -38,39 +41,66 @@ export function noteReducer (state:Note[] = InitialState, action:NoteAction) {
 					}
 				} else return x;
 			});
-		case "NOTE_REMOVE":
-			return state.filter(x => x.id !== action.payload.id);
 		default:
 			return state;
 	}
 }
 
-export function addNote(title: string, description: string): NoteAction {
-	return {
-		type: "NOTE_ADD",
-		payload: {
-			title,
-			description,
-		}
-	}
+//
+// actions
+//
+
+export async function fetchNotes(dispatch: Dispatch) {
+	const response = await (await fetch("http://localhost:3001/notes")).json();
+	dispatch({
+		type: "NOTE_LOAD",
+		payload: response,
+	});
 }
 
-export function removeNote(id: string): NoteAction {
-	return {
-		type: "NOTE_REMOVE",
-		payload: {
-			id,
-		}
-	};
+
+export async function addNote(dispatch: Dispatch, title: string, description: string) {
+	const note = {
+		id: uuid.v4(),
+		title: title,
+		description: description,
+	}
+
+	const response = await fetch("http://localhost:3001/notes", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(note),
+	});
+
+	dispatch({
+		type: "NOTE_ADD" + (response.ok ? "" : "_FAILED"),
+		payload: note,
+	});
 }
 
-export function editNote(id: string, newTitle?: string, newDescription?: string): NoteAction{
-	return {
-		type: "NOTE_EDIT",
-		payload: {
-			id,
-			title: newTitle,
-			description: newDescription,
-		}
-	}
+export async function removeNote(dispatch: Dispatch, id: string) {
+	const response = await fetch("http://localhost:3001/notes/" + id, {
+		method: "DELETE",
+		headers: { "Content-Type": "application/json" },
+	});
+
+	dispatch({
+		type: "NOTE_REMOVE" + (response.ok ? "" : "_FAILED"),
+		payload: { id },
+	});
+}
+
+export async function editNote(dispatch: Dispatch, id: string, title?: string, description?: string) {
+	const note = { id, title, description };
+
+	const response = await fetch("http://localhost:3001/notes/" + id, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(note),
+	});
+
+	dispatch({
+		type: "NOTE_EDIT" + (response.ok ? "" : "_FAILED"),
+		payload: note,
+	});
 }
