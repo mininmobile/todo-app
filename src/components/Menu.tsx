@@ -2,7 +2,7 @@ import { createRef } from "react";
 import "./Menu.css";
 
 interface MenuButtonProps {
-	menu: Array<[string, () => void]>,
+	menu: Array<[string, () => void] | "-">,
 	setContextMenuState: React.Dispatch<React.SetStateAction<MenuDropdownProps>>,
 }
 
@@ -35,14 +35,15 @@ export interface MenuDropdownProps {
 	open?: boolean,
 	x: number,
 	y: number,
-	menu: Array<[string, () => void]>,
+	menu: Array<[string, () => void] | "-">,
 }
 
 export const MenuDropdown:React.FC<MenuDropdownProps> = ({ menu, x, y }) => {
 	return (
 		<div className="menu-dropdown" style={{ left: x, top: y, }}>
-			{menu.map((item, i) =>
-				<div key={i} onMouseUp={item[1]} className="menu-dropdown__item">{item[0]}</div>)}
+			{menu.map((item, i) => item === "-"
+				? <div key={i} className="menu-dropdown__divider" />
+				: <div key={i} onMouseUp={item[1]} className="menu-dropdown__item">{item[0]}</div>)}
 		</div>
 	);
 }

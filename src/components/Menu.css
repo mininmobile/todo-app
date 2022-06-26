@@ -24,6 +24,12 @@
 	position: absolute;
 }
 
+.menu-dropdown__divider {
+	height: 1px;
+	margin: 0 .5rem;
+	background: rgba(0, 0, 0, 0.15)
+}
+
 .menu-dropdown__item {
 	padding: .5rem 1rem;
 	cursor: pointer;

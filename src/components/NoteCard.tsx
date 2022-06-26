@@ -19,6 +19,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, deleteActio
 			<div className="note-card__actions">
 				<MenuButton setContextMenuState={setContextMenuState} menu={[
 					["Edit", () => navigateAction(`/edit/${id}`)],
+					"-",
 					["Delete", deleteAction],
 				]}/>
 			</div>
