@@ -41,15 +41,14 @@ const App: React.FC<AppProps> = ({ action }) => {
 		<>
 			<NoteBar />
 			{notes.map((note) =>
-				<Fragment key={note.id!}>
-					<NoteCard
-						id={note.id!}
-						title={note.title!}
-						description={note.description!}
-						deleteAction={() => onDeleteAction(note.id!)}
-						navigateAction={navigate}
-						setContextMenuState={setMenu}/>
-				</Fragment>)}
+				<NoteCard key={note.id!}
+					id={note.id!}
+					title={note.title!}
+					description={note.description!}
+					deleteAction={() => onDeleteAction(note.id!)}
+					navigateAction={navigate}
+					setContextMenuState={setMenu}/>
+				)}
 
 			{/* render dropdown menu, if there is one */}
 			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}
