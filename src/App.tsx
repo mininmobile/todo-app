@@ -25,9 +25,8 @@ const App: React.FC<AppProps> = ({ action }) => {
 	// don't really have to pass useNavigate down but it's a bit of an optimization
 	const navigate = useNavigate();
 
-	const onDeleteAction = (id: string) => {
+	const onDeleteAction = (id: string) =>
 		removeNote(dispatch, id);
-	}
 
 	// context menu stuff
 	const closedMenuState: MenuDropdownProps = { open: false, x: 0, y: 0, menu: [] }

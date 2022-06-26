@@ -10,6 +10,9 @@ cd todo-app
 # install database server
 npm i -g json-server
 
+# create database
+echo '{ "notes": [] }' > db.json
+
 # install dependencies
 npm i
 ```
