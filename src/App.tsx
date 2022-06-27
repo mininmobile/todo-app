@@ -55,7 +55,7 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 
 	const filteredNotes = useMemo(() => {
 		let exp = new RegExp(escapeRegExp(searchQuery.text), "g");
-		return notes.filter(note => searchQuery.text.length ? // if a search query is passed
+		let filtered = notes.filter(note => searchQuery.text.length ? // if a search query is passed
 				// only allow if search query is in title or description
 				( exp.test(note.title!) || exp.test(note.description!) )
 				// allow all
@@ -64,7 +64,35 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 				// only allow if has all notes
 				searchQuery.tags.every(v => note.tags!.includes(v))
 				// allow all
-				: true);
+				: true)
+
+		// sort types explained in `./contexts/SearchContext.tsx`
+		if (searchQuery.sort > 0) {
+			const sort = searchQuery.sort;
+			const inverted = sort % 2 === 0;
+			const alphas = sort < 5;
+			const field: "title" | "description" = sort > 2 ? "description" : "title";
+
+			return filtered.sort((a, b) => {
+				var valA: string | number;
+				var valB: string | number;
+
+				if (alphas) {
+					valA = a[field]!.toUpperCase(); // ignore upper and lowercase
+					valB = b[field]!.toUpperCase(); // ignore upper and lowercase
+				} else {
+					valA = a.tags!.length;
+					valB = b.tags!.length;
+				}
+
+				const aFirst = valA < valB;
+				const bFirst = valA > valB;
+
+				if (inverted ? !aFirst : aFirst) return -1; // a first
+				if (inverted ? !bFirst : bFirst) return 1; // b first
+				return 0;  // equal
+			});
+		} else return filtered;
 	}, [notes, searchQuery]);
 
 	return (

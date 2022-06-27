@@ -3,7 +3,7 @@ import SearchContext from "./SearchContext";
 
 const SearchProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
 	const context = SearchContext;
-	const [searchQuery, setSearchQuery] = useState({ text: "", tags: Array<string>() });
+	const [searchQuery, setSearchQuery] = useState({ text: "", sort: 0, tags: Array<string>() });
 	const value = useMemo(() => ({ searchQuery, setSearchQuery }), [searchQuery]);
 
 	return (
