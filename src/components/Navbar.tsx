@@ -1,4 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { Searchbar } from "./Searchbar";
 
@@ -15,11 +16,26 @@ const Navbar: React.FC = () => {
 	);
 }
 
-const NavigationLink: React.FC<{ to: string, children: string }> = ({ to, children }) => {
+interface NavigationLinkProps {
+	to: string,
+	children: JSX.Element | string,
+}
+
+const NavigationLink: React.FC<NavigationLinkProps> = ({ to, children }) => {
+	const location = useLocation();
+	const [active, setActive] = useState(false);
+
+	useEffect(() => {
+		let l = location.pathname; // sanity
+		if (to === "/")
+			setActive(l === "/" || l === "/new" || l.startsWith("/edit"));
+		else
+			setActive(to === l);
+	}, [location]);
+
 	return (
-		<NavLink
-			end to={to}
-			className={({ isActive }) => isActive ? "navbar__link active" : "navbar__link" }
+		<Link to={to}
+			className={"navbar__link " + (active ? "active" : "") }
 			children={children} />
 	);
 }
