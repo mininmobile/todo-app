@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { createRef, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SearchContext from "../contexts/SearchContext";
 
@@ -12,10 +12,12 @@ export const Searchbar: React.FC<SearchbarProps> = ({ children }) => {
 	const [open, setOpen] = useState(false);
 	const { searchQuery, setSearchQuery } = useContext(SearchContext);
 
+	const input = createRef<HTMLInputElement>();
+
 	useEffect(() => {
 		if (location.pathname !== "/")
 			setSearchQuery(""); // onBlur event executes setOpen(false) for us
-	}, [location]);
+	}, [location, setSearchQuery]);
 
 	const handleFocus = () => {
 		if (!open) {
@@ -28,12 +30,15 @@ export const Searchbar: React.FC<SearchbarProps> = ({ children }) => {
 	const handleBlur = () => setOpen(false);
 
 	return (
-		<label className={"searchbar " + (open || searchQuery.length ? "active" : "")}>
-			<input className="searchbar__input" type="text"
+		<div className={"searchbar " + (open || searchQuery.length ? "active" : "")}
+			onClick={(e) => e.currentTarget === e.target ? input.current?.focus() : null}>
+			<input ref={input} className="searchbar__input" type="text"
 				value={open || searchQuery.length ? searchQuery : children}
 				onChange={(e) => setSearchQuery(e.currentTarget.value)}
 				onFocus={handleFocus}
 				onBlur={handleBlur} />
-		</label>
+			<div className="searchbar__clear" children="x"
+				onClick={() => { if (searchQuery.length) { setSearchQuery(""); input.current?.focus() } } } />
+		</div>
 	);
 }

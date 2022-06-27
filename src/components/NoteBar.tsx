@@ -5,15 +5,16 @@ interface NoteBarProps {
 	newNoteAction: (title: string, description: string) => {},
 }
 
+const defaultState = {
+	open: false,
+	title: "",
+	description: "",
+}
+
 const NoteBar:React.FC<NoteBarProps> = ({ newNoteAction }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const defaultState = {
-		open: false,
-		title: "",
-		description: "",
-	};
 	const [state, setState] = useState(defaultState);
 
 	useEffect(() => {

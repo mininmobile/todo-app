@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
 
 interface NavigationLinkProps {
 	to: string,
-	children: JSX.Element | string,
+	children: React.ReactNode,
 }
 
 const NavigationLink: React.FC<NavigationLinkProps> = ({ to, children }) => {
@@ -31,7 +31,7 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({ to, children }) => {
 			setActive(l === "/" || l === "/new" || l.startsWith("/edit"));
 		else
 			setActive(to === l);
-	}, [location]);
+	}, [location, to]);
 
 	return (
 		<Link to={to}

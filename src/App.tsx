@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchContext from "./contexts/SearchContext";
@@ -16,7 +16,7 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = ({ action }) => {
-	const _notes = useSelector<Note[], Note[]>(state => state);
+	const notes = useSelector<Note[], Note[]>(state => state);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -53,17 +53,19 @@ const App: React.FC<AppProps> = ({ action }) => {
 		return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	}
 
-	const notes = searchQuery.length ? _notes.filter(note => {
-		if (searchQuery.length)
-			return ( new RegExp(escapeRegExp(searchQuery), "g").test(note.title!)
-				|| new RegExp(escapeRegExp(searchQuery), "g").test(note.description!) );
-		else return true;
-	}) : _notes;
+	const filteredNotes = useMemo(() => {
+		let exp = new RegExp(escapeRegExp(searchQuery), "g");
+		return notes.filter(note => searchQuery.length ? // if a search query is passed
+			// only allow if search query is in title or description
+			( exp.test(note.title!) || exp.test(note.description!) )
+			// allow all
+			: true)
+	}, [notes, searchQuery]);
 
 	return (
 		<>
 			<NoteBar newNoteAction={onNewAction} />
-			{notes
+			{filteredNotes
 				.map(note =>
 					<NoteCard key={note.id!}
 						id={note.id!}
@@ -73,7 +75,7 @@ const App: React.FC<AppProps> = ({ action }) => {
 						navigateAction={navigate}
 						setContextMenuState={setMenu}/>)}
 			{searchQuery.length > 0 &&
-				<div className="note-search-info">search excluding {_notes.length - notes.length} notes</div> }
+				<div className="note-search-info">search excluding {notes.length - filteredNotes.length} notes</div> }
 
 			{/* render dropdown menu, if there is one */}
 			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}

@@ -58,22 +58,45 @@
 	max-width: 100vw;
 	padding: .5rem 1rem;
 	color: white;
+	background: rgba(255, 255, 255, 0.1);
 	outline: none;
 	border: none;
-	background: rgba(255, 255, 255, 0.1);
 	cursor: pointer;
 	border-radius: 5rem;
-	transition: width .3s, background .15s;
+	transition: margin-right .3s, width .3s, background .15s;
+}
+
+.searchbar__clear {
+	height: 2rem;
+	width: 0;
+	color: white;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 50%;
+	text-align: center;
+	opacity: 0;
+	overflow: hidden;
+	cursor: pointer;
+	transition: opacity .3s, width .3s, background .15s;
 }
 
 .searchbar__input:hover {
 	background: rgba(255, 255, 255, 0.2);
 }
 
+.searchbar__clear:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+
 .searchbar.active .searchbar__input {
 	width: 16rem;
+	margin-right: .5rem;
 	cursor: text;
 	background: rgba(255, 255, 255, 0.2);
+}
+
+.searchbar.active .searchbar__clear {
+	width: 2rem;
+	opacity: 1;
 }
 
 @media (orientation: portrait) {
@@ -90,7 +113,7 @@
 	}
 
 	.searchbar__input {
-		width: fit-content !important;
+		width: 0;
 		flex-grow: 1;
 	}
 }
