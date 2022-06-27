@@ -25,9 +25,9 @@ root.render(
 					<div id="container" className="container">
 						<Routes>
 							<Route path="/" element={<App />} />
-							<Route path="/new" element={<App />} />
-							<Route path="/edit" element={<App action="NEW" />} />
-							<Route path="/edit/:id" element={<App action="EDIT" />} />
+							<Route path="/new" element={<App />} /> {/* handled by the notebar */}
+							<Route path="/edit" element={<App dialog="NEW" />} />
+							<Route path="/edit/:id" element={<App dialog="EDIT" />} />
 
 							<Route path="/about" element={<About />} />
 							<Route path="/*" element={<InvalidPage />} />

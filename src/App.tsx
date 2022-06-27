@@ -12,10 +12,10 @@ import NoteBar from "./components/NoteBar";
 import NoteCard from "./components/NoteCard";
 
 interface AppProps {
-	action?: "NEW" | "EDIT",
+	dialog?: "NEW" | "EDIT",
 }
 
-const App: React.FC<AppProps> = ({ action }) => {
+const App: React.FC<AppProps> = ({ dialog }) => {
 	const notes = useSelector<Note[], Note[]>(state => state);
 	const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ const App: React.FC<AppProps> = ({ action }) => {
 			{/* render dropdown menu, if there is one */}
 			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}
 			{/* handle dialogs */}
-			{action && <Dialog element={<FormNote type={action} />} /> }
+			{dialog && <Dialog element={<FormNote type={dialog} />} /> }
 		</>
 	);
 }

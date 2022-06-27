@@ -11,7 +11,7 @@ cd todo-app
 npm i -g json-server
 
 # create database
-echo '{ "notes": [] }' > db.json
+echo '{ "notes": [], "tags": [] }' > db.json
 
 # install dependencies
 npm i
