@@ -38,7 +38,7 @@ export interface MenuDropdownProps {
 	menu: Array<[string, () => void] | "-">,
 }
 
-export const MenuDropdown:React.FC<MenuDropdownProps> = ({ menu, x, y }) => {
+export const MenuDropdown: React.FC<MenuDropdownProps> = ({ menu, x, y }) => {
 	return (
 		<div className="menu-dropdown" style={{ left: x, top: y, }}>
 			{menu.map((item, i) => item === "-"

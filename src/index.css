@@ -14,6 +14,10 @@ a.link {
 	text-decoration: underline;
 }
 
+input, textarea {
+	background: transparent;
+}
+
 .container {
 	width: 55%;
 	margin: 2rem auto 7rem auto;

@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import SearchProvider from "./contexts/SearchProvider";
 
 import App from "./App";
+import TagManager from "./routes/TagManager";
 import About from "./routes/About";
 import InvalidPage from "./routes/InvalidPage";
 
@@ -28,6 +29,8 @@ root.render(
 							<Route path="/new" element={<App />} /> {/* handled by the notebar */}
 							<Route path="/edit" element={<App dialog="NEW" />} />
 							<Route path="/edit/:id" element={<App dialog="EDIT" />} />
+
+							<Route path="/tags" element={<TagManager />} />
 
 							<Route path="/about" element={<About />} />
 							<Route path="/*" element={<InvalidPage />} />

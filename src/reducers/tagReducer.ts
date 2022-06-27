@@ -91,7 +91,7 @@ export async function removeTag(dispatch: Dispatch, id: string) {
 	});
 }
 
-export async function editTag(dispatch: Dispatch, id: string, title?: string, color?: string) {
+export async function editTag(dispatch: Dispatch, id: string, title: string, color: string) {
 	const tag = { id, title, color };
 
 	const response = await fetch("http://localhost:3001/tags/" + id, {

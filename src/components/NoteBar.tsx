@@ -11,7 +11,7 @@ const defaultState = {
 	description: "",
 }
 
-const NoteBar:React.FC<NoteBarProps> = ({ newNoteAction }) => {
+const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
