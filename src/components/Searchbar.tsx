@@ -2,11 +2,7 @@ import { createRef, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SearchContext from "../contexts/SearchContext";
 
-interface SearchbarProps {
-	children: string,
-}
-
-export const Searchbar: React.FC<SearchbarProps> = ({ children }) => {
+export const Searchbar: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [open, setOpen] = useState(false);
@@ -15,13 +11,13 @@ export const Searchbar: React.FC<SearchbarProps> = ({ children }) => {
 	const input = createRef<HTMLInputElement>();
 
 	useEffect(() => {
-		if (location.pathname !== "/")
+		if (location.pathname !== "/" && location.pathname !== "/new")
 			setSearchQuery({ text: "", tags: Array<string>() }); // onBlur event executes setOpen(false) for us
 	}, [location, setSearchQuery]);
 
 	const handleFocus = () => {
 		if (!open) {
-			if (window.location.pathname !== "/")
+			if (location.pathname !== "/" && location.pathname !== "/new")
 				navigate("/");
 			setOpen(true);
 		}
@@ -33,7 +29,11 @@ export const Searchbar: React.FC<SearchbarProps> = ({ children }) => {
 		<div className={"searchbar " + (open || searchQuery.text.length ? "active" : "")}
 			onClick={(e) => e.currentTarget === e.target ? input.current?.focus() : null}>
 			<input ref={input} className="searchbar__input" type="text"
-				value={open || searchQuery.text.length ? searchQuery.text : children}
+				// if there is a text in the searchbar, use it as the value
+				value={open || searchQuery.text.length ? searchQuery.text :
+					// otherwise, display "Search" if on the main page, or "Search Notes" if elsewhere
+					((location.pathname === "/" || location.pathname === "/new" || location.pathname.startsWith("/edit"))
+						? "Search" : "Search Notes")}
 				onChange={(e) => setSearchQuery({ text: e.currentTarget.value, tags: searchQuery.tags })}
 				onFocus={handleFocus}
 				onBlur={handleBlur} />

@@ -18,6 +18,8 @@ const TagSearchbar: React.FC = () => {
 		<>
 		{searchQuery.tags.length > 0 &&
 			<div className="tag-searchbar">
+				<div className="tag-searchbar__clear"
+					onClick={() => setSearchQuery({ ...searchQuery, tags: [] })}>x</div>
 				{tagsFiltered.map(tag =>
 					<div key={tag.id} className="note-card__tag"
 					onClick={() => handleClickTag(tag.id!)}

@@ -46,11 +46,30 @@
 /* tag searchbar */
 
 .tag-searchbar {
-	margin: 0 1rem;
+	margin: -1rem 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: left;
 	gap: 1rem;
+}
+
+.tag-searchbar__clear {
+	height: 1rem;
+	width: 1rem;
+	padding: .5rem;
+	text-align: center;
+	font-size: .8rem;
+	line-height: 1.2;
+	border-radius: 50%;
+	cursor: pointer;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	transition: background .2s;
+}
+
+.tag-searchbar__clear:hover {
+	background: rgba(0, 0, 0, .1);
 }
 
 .tag-searchbar .note-card__tag {
@@ -73,7 +92,7 @@
 }
 
 .tag-searchbar .note-card__tag:hover::after {
-	background: rgba(255, 255, 255, .2);
+	background: rgba(255, 255, 255, .25);
 }
 
 /* note card */

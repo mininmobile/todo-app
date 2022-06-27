@@ -1,6 +1,7 @@
 .navbar {
 	padding: 0 .5rem;
 	height: 3rem;
+	background: #1c1c1c;
 	display: flex;
 	align-items: stretch;
 	justify-content: space-between;
@@ -8,7 +9,10 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background: #1c1c1c;
+	z-index: 9;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
 }
 
 .navbar__link, .navbar__title {

@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
 		<nav className="navbar">
 			<Link to="/" className="navbar__title">Todo App</Link>
 			<div className="navbar__links">
-				<Searchbar>Search</Searchbar>
+				<Searchbar />
 				<NavigationLink to="/">Home</NavigationLink>
 				<NavigationLink to="/about">About</NavigationLink>
 			</div>
