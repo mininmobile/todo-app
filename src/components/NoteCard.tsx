@@ -21,7 +21,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, tagIds, del
 	const tags = useSelector<RootState, Tag[]>(state => state.tags);
 
 	const tagsFiltered = useMemo(() =>
-		tags.filter(tag => tagIds.includes(tag.id!)), [tags]);
+		tags.filter(tag => tagIds.includes(tag.id!)), [tags, tagIds]);
 
 	const handleClickTag = (tagId: string) => {
 		if (!searchQuery.tags.includes(tagId))

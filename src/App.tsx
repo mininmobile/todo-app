@@ -12,6 +12,7 @@ import Dialog from "./components/Dialog";
 import FormNote from "./components/FormNote";
 import NoteBar from "./components/NoteBar";
 import NoteCard from "./components/NoteCard";
+import TagSearchbar from "./components/TagSearchbar";
 
 interface AppProps {
 	dialog?: "NEW" | "EDIT",
@@ -19,7 +20,6 @@ interface AppProps {
 
 const App: React.FC<AppProps> = ({ dialog }) => {
 	const notes = useSelector<RootState, Note[]>(state => state.notes);
-	const tags = useSelector<RootState, Note[]>(state => state.tags);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -69,11 +69,12 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 				searchQuery.tags.every(v => note.tags!.includes(v))
 				// allow all
 				: true);
-	}, [notes, tags, searchQuery]);
+	}, [notes, searchQuery]);
 
 	return (
 		<>
 			<NoteBar newNoteAction={onNewAction} />
+			<TagSearchbar />
 			{filteredNotes
 				.map(note =>
 					<NoteCard key={note.id!}
