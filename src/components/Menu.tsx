@@ -1,12 +1,16 @@
 import { createRef } from "react";
 import "./Menu.css";
 
+export type Menu = Array<[string | JSX.Element, () => void ] | "-">;
+
 interface MenuButtonProps {
-	menu: Array<[string, () => void] | "-">,
+	children?: string | JSX.Element,
+	className?: string,
+	menu: Menu,
 	setContextMenuState: React.Dispatch<React.SetStateAction<MenuDropdownProps>>,
 }
 
-export const MenuButton: React.FC<MenuButtonProps> = ({ menu, setContextMenuState }) => {
+export const MenuButton: React.FC<MenuButtonProps> = ({ children = "≡", className, menu, setContextMenuState }) => {
 	const button = createRef<HTMLDivElement>();
 
 	const handleOpenMenu = () => {
@@ -24,18 +28,17 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ menu, setContextMenuStat
 	}
 
 	return (
-		<div ref={button} className="menu-button"
-			onClick={handleOpenMenu}>
-			≡
+		<div ref={button} className={"menu-button " + className} onClick={handleOpenMenu}>
+			{children}
 		</div>
-	)
+	);
 }
 
 export interface MenuDropdownProps {
 	open?: boolean,
 	x: number,
 	y: number,
-	menu: Array<[string, () => void] | "-">,
+	menu: Menu,
 }
 
 export const MenuDropdown: React.FC<MenuDropdownProps> = ({ menu, x, y }) => {

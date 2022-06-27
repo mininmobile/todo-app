@@ -1,8 +1,9 @@
 import { useContext, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavigateFunction } from "react-router-dom";
 import { RootState } from "../store";
 import { Tag } from "../reducers/tagReducer";
+import { removeNote, tagNote, untagNote } from "../reducers/noteReducer";
 import SearchContext from "../contexts/SearchContext";
 import { MenuButton, MenuDropdownProps } from "./Menu";
 
@@ -11,20 +12,31 @@ interface NoteCardProps {
 	title: string,
 	description: string,
 	tagIds: string[],
-	deleteAction: () => void,
 	navigateAction: NavigateFunction,
 	setContextMenuState: React.Dispatch<React.SetStateAction<MenuDropdownProps>>,
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, tagIds, deleteAction, navigateAction, setContextMenuState }) => {
+const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, tagIds, navigateAction, setContextMenuState }) => {
 	const { searchQuery, setSearchQuery } = useContext(SearchContext);
 	const tags = useSelector<RootState, Tag[]>(state => state.tags);
+	const dispatch = useDispatch();
 
 	const tagsFiltered = useMemo(() =>
 		tags.filter(tag => tagIds.includes(tag.id!)), [tags, tagIds]);
+	const tagsFilteredInvert = useMemo(() =>
+		tags.filter(tag => !tagIds.includes(tag.id!)), [tags, tagIds]);
 
-	const handleClickTag = (tagId: string) => {
-		if (!searchQuery.tags.includes(tagId))
+	const handleDelete = (id: string) =>
+		removeNote(dispatch, id);
+
+	const handleTagNote = (noteId: string, tagIds: string[], tagId: string) =>
+		tagNote(dispatch, noteId, tagIds, tagId);
+
+	const handleUntagNote = (noteId: string, tagIds: string[], tagId: string) =>
+		untagNote(dispatch, noteId, tagIds, tagId);
+
+	const handleClickTag = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, tagId: string) => {
+		if (e.currentTarget === e.target && !searchQuery.tags.includes(tagId))
 			setSearchQuery({ ...searchQuery, tags: [ ...searchQuery.tags, tagId ] })
 	}
 
@@ -36,14 +48,27 @@ const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, tagIds, del
 				<div className="note-card__tags">
 					{tagsFiltered.map(tag =>
 						<div key={tag.id} className="note-card__tag"
-						onClick={() => handleClickTag(tag.id!)}
-						style={{ background: "#" + tag.color }}>{tag.title}</div>)}
+						onClick={(e) => handleClickTag(e, tag.id!)}
+						style={{ background: "#" + tag.color }}>
+							{tag.title}
+							<div className="note-card__tag__remove"
+								onClick={() => handleUntagNote(id, tagIds, tag.id!)}>x</div>
+						</div>)}
+					<MenuButton setContextMenuState={setContextMenuState}
+						className="note-card__tags-add" menu={
+						tagsFilteredInvert.map(tag =>
+							[<>
+								<div className="menu-dropdown__item__color"
+									style={{ background: "#" + tag.color }} />
+								{tag.title!.charAt(0).toUpperCase() + tag.title!.substring(1)}
+							</>, () => handleTagNote(id, tagIds, tag.id!)])
+					}>+</MenuButton>
 				</div>
 				<MenuButton setContextMenuState={setContextMenuState} menu={[
 					["Edit", () => navigateAction(`/edit/${id}`)],
 					"-",
-					["Delete", deleteAction],
-				]}/>
+					["Delete", () => handleDelete(id)],
+				]} />
 			</div>
 		</div>
 	);

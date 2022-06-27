@@ -1,5 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import * as uuid from "uuid";
+import { Note, untagAllNotes } from "./noteReducer";
 
 export interface Tag {
 	id?: string,
@@ -79,7 +80,7 @@ export async function addTag(dispatch: Dispatch, title: string, color: string) {
 	});
 }
 
-export async function removeTag(dispatch: Dispatch, id: string) {
+export async function removeTag(dispatch: Dispatch, id: string, notesState: Note[]) {
 	const response = await fetch("http://localhost:3001/tags/" + id, {
 		method: "DELETE",
 		headers: { "Content-Type": "application/json" },
@@ -89,6 +90,9 @@ export async function removeTag(dispatch: Dispatch, id: string) {
 		type: "TAG_REMOVE" + (response.ok ? "" : "_FAILED"),
 		payload: { id },
 	});
+
+	if (response.ok)
+		untagAllNotes(dispatch, notesState, id);
 }
 
 export async function editTag(dispatch: Dispatch, id: string, title: string, color: string) {

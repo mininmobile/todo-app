@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { validateLocaleAndSetLanguage } from "typescript";
 import { Tag } from "../reducers/tagReducer";
 import "./TagListItem.css";
 

@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { addTag, editTag, fetchTags, removeTag, Tag } from "../reducers/tagReducer";
 import TagListItem from "../components/TagListItem";
+import { fetchNotes, Note } from "../reducers/noteReducer";
 
 const TagManager: React.FC = () => {
+	const notes = useSelector<RootState, Note[]>(state => state.notes);
 	const tags = useSelector<RootState, Tag[]>(state => state.tags);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		fetchNotes(dispatch);
 		fetchTags(dispatch);
 	}, [dispatch]);
 
@@ -21,7 +24,7 @@ const TagManager: React.FC = () => {
 	}
 
 	const handleRemoveAction = (id: string) => {
-		removeTag(dispatch, id);
+		removeTag(dispatch, id, notes);
 	}
 
 	return (

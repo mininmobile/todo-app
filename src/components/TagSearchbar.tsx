@@ -23,7 +23,10 @@ const TagSearchbar: React.FC = () => {
 				{tagsFiltered.map(tag =>
 					<div key={tag.id} className="note-card__tag"
 					onClick={() => handleClickTag(tag.id!)}
-					style={{ background: "#" + tag.color }}>{tag.title}</div>)}
+					style={{ background: "#" + tag.color }}>
+						{tag.title}
+						<div className="note-card__tag__remove">x</div>
+					</div>)}
 			</div>}
 		</>
 	);

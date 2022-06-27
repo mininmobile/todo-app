@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import SearchContext from "./contexts/SearchContext";
 import { RootState } from "./store";
 import "./App.css";
-import { addNote, fetchNotes, Note, removeNote } from "./reducers/noteReducer";
+import { addNote, fetchNotes, Note } from "./reducers/noteReducer";
 import { fetchTags } from "./reducers/tagReducer";
 
 import { MenuDropdown, MenuDropdownProps } from "./components/Menu";
@@ -31,12 +31,8 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 	const onNewAction = (title: string, description: string) =>
 		addNote(dispatch, title, description);
 
-	// stuff that is passed down to each NoteCard bc react deems it so
-	// don't really have to pass useNavigate down but it's a bit of an optimization
+	// passed down to NoteCard(s)
 	const navigate = useNavigate();
-
-	const onDeleteAction = (id: string) =>
-		removeNote(dispatch, id);
 
 	// context menu stuff
 	const closedMenuState: MenuDropdownProps = { open: false, x: 0, y: 0, menu: [] }
@@ -82,7 +78,6 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 						title={note.title!}
 						description={note.description!}
 						tagIds={note.tags!}
-						deleteAction={() => onDeleteAction(note.id!)}
 						navigateAction={navigate}
 						setContextMenuState={setMenu}/>)}
 			{(searchQuery.text.length > 0 || searchQuery.tags.length > 0) &&

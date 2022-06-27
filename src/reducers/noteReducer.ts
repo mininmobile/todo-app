@@ -14,9 +14,9 @@ interface NoteActionLoad {
 }
 
 interface NoteActionTag {
-	type: "NOTE_TAG" | "NOTE_UNTAG",
+	type: "NOTE_TAG" | "NOTE_UNTAG" | "NOTE_UNTAG_ALL",
 	payload: {
-		id: string,
+		id?: string,
 		tagId: string,
 	},
 }
@@ -28,7 +28,7 @@ interface NoteAction {
 
 const InitialState:Note[] = []
 
-export function noteReducer (state: Note[] = InitialState, action: NoteActionLoad | NoteActionTag | NoteAction) {
+export function noteReducer(state: Note[] = InitialState, action: NoteActionLoad | NoteActionTag | NoteAction) {
 	switch (action.type) {
 		// NoteActionLoad handlers
 		case "NOTE_LOAD":
@@ -73,12 +73,15 @@ export function noteReducer (state: Note[] = InitialState, action: NoteActionLoa
 				} else return x;
 			});
 
+		// when removing a note, remove all tags on notes
+
+
 		default: return state;
 	}
 }
 
 //
-// actions
+// action dispatchers
 //
 
 export async function fetchNotes(dispatch: Dispatch) {
@@ -90,11 +93,13 @@ export async function fetchNotes(dispatch: Dispatch) {
 	});
 }
 
-export async function tagNote(dispatch: Dispatch, id:string, tagId: string) {
-	const response = await fetch("http://localhost:3001/notes/" + id + "/tags", {
-		method: "POST",
+// NoteActionTag dispatchers
+
+export async function tagNote(dispatch: Dispatch, id:string, tagIds: string[], tagId: string) {
+	const response = await fetch("http://localhost:3001/notes/" + id, {
+		method: "PATCH",
 		headers: { "Content-Type": "application/json" },
-		body: tagId,
+		body: JSON.stringify({ tags: [ ...tagIds, tagId ] }),
 	});
 
 	dispatch({
@@ -103,11 +108,11 @@ export async function tagNote(dispatch: Dispatch, id:string, tagId: string) {
 	});
 }
 
-export async function untagNote(dispatch: Dispatch, id:string, tagId: string) {
-	const response = await fetch("http://localhost:3001/notes/" + id + "/tags", {
-		method: "DELETE",
+export async function untagNote(dispatch: Dispatch, id:string, tagIds: string[], tagId: string) {
+	const response = await fetch("http://localhost:3001/notes/" + id, {
+		method: "PATCH",
 		headers: { "Content-Type": "application/json" },
-		body: tagId,
+		body: JSON.stringify({ tags: tagIds.filter(x => x !== tagId) }),
 	});
 
 	dispatch({
@@ -115,6 +120,30 @@ export async function untagNote(dispatch: Dispatch, id:string, tagId: string) {
 		payload: { id, tagId },
 	});
 }
+
+
+export async function untagAllNotes(dispatch: Dispatch, state: Note[], tagId: string) {
+	const newState = state.map((note) => {
+		return {
+			...note,
+			tags: note.tags!.filter(t => t !== tagId),
+		}
+	});
+
+	const response = await fetch("http://localhost:3001/notes", {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(newState),
+	});
+	const json = await response.json();
+
+	dispatch({
+		type: "NOTE_UNTAG_ALL" + (response.ok ? "" : "_FAILED"),
+		payload: json,
+	});
+}
+
+// NoteAction dispatchers
 
 export async function addNote(dispatch: Dispatch, title: string, description: string) {
 	const note = {
@@ -148,17 +177,18 @@ export async function removeNote(dispatch: Dispatch, id: string) {
 	});
 }
 
-export async function editNote(dispatch: Dispatch, id: string, title: string, description: string, tags: string[]) {
-	const note = { id, title, description, tags };
+export async function editNote(dispatch: Dispatch, id: string, title?: string, description?: string, tags?: string[]) {
+	const note = { title, description, tags };
 
 	const response = await fetch("http://localhost:3001/notes/" + id, {
-		method: "PUT",
+		method: "PATCH",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(note),
 	});
+	const json = await response.json();
 
 	dispatch({
 		type: "NOTE_EDIT" + (response.ok ? "" : "_FAILED"),
-		payload: note,
+		payload: json,
 	});
 }
