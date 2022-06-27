@@ -55,7 +55,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, tagIds, nav
 								onClick={() => handleUntagNote(id, tagIds, tag.id!)}>x</div>
 						</div>)}
 
-					<MenuButton setContextMenuState={setContextMenuState}
+					{tagsFilteredInvert.length > 0 ? <MenuButton setContextMenuState={setContextMenuState}
 						className="note-card__tags-add" righty={true} menu={
 						tagsFilteredInvert.map(tag =>
 							[<>
@@ -63,7 +63,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ id, title, description, tagIds, nav
 									style={{ background: "#" + tag.color }} />
 								{tag.title!.charAt(0).toUpperCase() + tag.title!.substring(1)}
 							</>, () => handleTagNote(id, tagIds, tag.id!)])
-					}>+</MenuButton>
+					}>+</MenuButton> : null}
 				</div>
 
 				<MenuButton setContextMenuState={setContextMenuState} menu={[

@@ -38,7 +38,7 @@
 /* buttons */
 
 .tag-list-item__buttons {
-	width: 10rem;
+	width: 9rem;
 	display: flex;
 	justify-content: right;
 	gap: .5rem;
