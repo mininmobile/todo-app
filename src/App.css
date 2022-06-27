@@ -5,53 +5,48 @@
 	box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.15);
 }
 
-/* note bar */
-
-.note-bar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.note-card__title, .note-bar__input-title {
+	margin: 1rem 0;
+	font-size: 1.4rem;
 }
 
-.note-bar__text {
-	font-size: 1.5rem;
+.note-card__description, .note-bar__input-description {
+	margin: 1rem 0;
+}
+
+/* note bar */
+
+.note-bar__input-title {
+	width: 100%;
+	outline: none;
+	border: none;
+}
+
+.note-bar__input-description {
+	resize: vertical;
+	width: 100%;
+	font-family: sans-serif;
+	outline: none;
+	border: none;
+	display: none;
 }
 
 .note-bar__buttons {
-	display: flex;
-	gap: .5rem;
+	display: none !important;
 }
 
-.note-bar__button {
-	width: 3rem;
-	height: 3rem;
-	background: rgba(0, 0, 0, .05);
-	font-size: 2rem;
-	border-radius: 50%;
-	text-align: center;
-	line-height: 2.5rem;
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	        user-select: none;
-	transition: background .15s;
-
+.note-bar.active .note-bar__input-description {
+	display: block;
 }
 
-.note-bar__button:hover {
-	background: rgba(0, 0, 0, .1);
+.note-bar.active .note-bar__buttons {
+	display: flex !important;
 }
 
 /* note card */
 
-.note-card__title {
-	margin: 1rem 0;
-	font-size: 1.4rem;
-	display: block;
-}
-
 .note-card__description {
-	margin: 1rem 0;
-	display: block;
+	white-space: pre;
 }
 
 .note-card__actions {

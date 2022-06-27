@@ -25,7 +25,7 @@ root.render(
 					<div id="container" className="container">
 						<Routes>
 							<Route path="/" element={<App />} />
-							<Route path="/new" element={<App action="NEW" />} />
+							<Route path="/new" element={<App />} />
 							<Route path="/edit" element={<App action="NEW" />} />
 							<Route path="/edit/:id" element={<App action="EDIT" />} />
 

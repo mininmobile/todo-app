@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchContext from "./contexts/SearchContext";
 import "./App.css";
-import { fetchNotes, Note, removeNote } from "./reducers/noteReducer";
+import { addNote, fetchNotes, Note, removeNote } from "./reducers/noteReducer";
 
 import { MenuDropdown, MenuDropdownProps } from "./components/Menu";
 import Dialog from "./components/Dialog";
@@ -22,6 +22,10 @@ const App: React.FC<AppProps> = ({ action }) => {
 	useEffect(() => {
 		fetchNotes(dispatch);
 	}, [dispatch]);
+
+	// passed down to NoteBar
+	const onNewAction = (title: string, description: string) =>
+		addNote(dispatch, title, description);
 
 	// stuff that is passed down to each NoteCard bc react deems it so
 	// don't really have to pass useNavigate down but it's a bit of an optimization
@@ -49,8 +53,8 @@ const App: React.FC<AppProps> = ({ action }) => {
 		return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 	}
 
-	const notes = searchQuery.length > 0 ? _notes.filter(note => {
-		if (searchQuery.length > 0)
+	const notes = searchQuery.length ? _notes.filter(note => {
+		if (searchQuery.length)
 			return ( new RegExp(escapeRegExp(searchQuery), "g").test(note.title!)
 				|| new RegExp(escapeRegExp(searchQuery), "g").test(note.description!) );
 		else return true;
@@ -58,7 +62,7 @@ const App: React.FC<AppProps> = ({ action }) => {
 
 	return (
 		<>
-			<NoteBar />
+			<NoteBar newNoteAction={onNewAction} />
 			{notes
 				.map(note =>
 					<NoteCard key={note.id!}
