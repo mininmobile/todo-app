@@ -126,7 +126,7 @@
 	background: rgba(255, 255, 255, .25);
 }
 
-.note-card__tags .note-card__tag-add {
+.note-card__tags .note-card__tags-add {
 	height: 1rem;
 	width: 1rem;
 	padding: .5rem;

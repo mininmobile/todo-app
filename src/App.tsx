@@ -84,7 +84,7 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 				<div className="note-search-info">search excluding {notes.length - filteredNotes.length} notes</div> }
 
 			{/* render dropdown menu, if there is one */}
-			{menu.open && <MenuDropdown x={menu.x} y={menu.y} menu={menu.menu} />}
+			{menu.open && <MenuDropdown x={menu.x} y={menu.y} righty={menu.righty} menu={menu.menu} />}
 			{/* handle dialogs */}
 			{dialog && <Dialog element={<FormNote type={dialog} />} /> }
 		</>
