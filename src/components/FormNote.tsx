@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { RootState } from "../store";
 import { addNote, editNote, Note } from "../reducers/noteReducer";
 
 interface FormNoteProps {
@@ -10,7 +11,7 @@ interface FormNoteProps {
 }
 
 const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
-	const notes = useSelector<Note[], Note[]>(state => state);
+	const notes = useSelector<RootState, Note[]>(state => state.notes);
 	const dispatch = useDispatch();
 
 	let [title, setTitle] = useState("");

@@ -19,7 +19,7 @@ interface TagAction {
 
 const InitialState: Tag[] = []
 
-export function noteReducer(state = InitialState, action: TagActionLoad | TagAction): Tag[] {
+export function tagsReducer(state = InitialState, action: TagActionLoad | TagAction): Tag[] {
 	switch (action.type) {
 		// TagActionLoad handlers
 		case "TAG_LOAD":
@@ -52,13 +52,13 @@ export function noteReducer(state = InitialState, action: TagActionLoad | TagAct
 //
 
 export async function fetchTags(dispatch: Dispatch) {
-	const response = await (await fetch("http://localhost:3001/tags")).json();
+	const response = await fetch("http://localhost:3001/tags");
+	const json = await response.json();
 	dispatch({
 		type: "TAG_LOAD" + (response.ok ? "" : "_FAILED"),
-		payload: response,
+		payload: json,
 	});
 }
-
 
 export async function addTag(dispatch: Dispatch, title: string, color: string) {
 	const tag = {

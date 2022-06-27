@@ -54,6 +54,26 @@
 	justify-content: right;
 }
 
+.note-card__tags {
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: left;
+	gap: 1rem;
+}
+
+.note-card__tag {
+	height: 1rem;
+	padding: .5rem 1rem;
+	color: white;
+	font-size: .8rem;
+	line-height: 1.2;
+	border-radius: 2rem;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+}
+
 /* note search info */
 
 .note-search-info {
@@ -76,4 +96,10 @@
 	position: relative;
 	bottom: .3rem;
 	opacity: .5; /* thin lines appear too dark */
+}
+
+@media (orientation: portrait) {
+	.note-search-info::before, .note-search-info::after {
+		width: 2rem;
+	}
 }

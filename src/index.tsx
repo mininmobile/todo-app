@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import "./index.css";
-import store from "./store";
+import { store } from "./store";
 
 import Navbar from "./components/Navbar";
 import SearchProvider from "./contexts/SearchProvider";

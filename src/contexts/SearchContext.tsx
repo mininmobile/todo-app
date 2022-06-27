@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 const SearchContext = createContext({
-	searchQuery: "",
-	setSearchQuery: (x: string) => {},
+	searchQuery: { text: "", tags: Array<string>() },
+	setSearchQuery: (searchQuery: { text: string, tags: Array<string> }) => {},
 });
 
 export default SearchContext;
