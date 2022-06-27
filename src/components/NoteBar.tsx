@@ -18,8 +18,8 @@ const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 	const [state, setState] = useState(defaultState);
 
 	useEffect(() => {
-		setState(location.pathname !== "/new" ?
-			defaultState : { ...defaultState, open: true });
+		setState(location.pathname !== "/new" ? defaultState
+			: { ...defaultState, open: true });
 	}, [location]);
 
 	const handleFocus = () => {
@@ -36,9 +36,23 @@ const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 	}
 
 	const handleSubmit = () => {
+		if (state.title.length === 0 || state.description.length === 0)
+			return;
+
 		newNoteAction(state.title, state.description);
 		handleCancel(); // or rather, handle close in this case
 	}
+
+	useEffect(() => {
+		const listener = (e: KeyboardEvent) => {
+			if (e.ctrlKey && e.key === "Enter")
+				handleSubmit();
+		}
+
+		if (state.open)
+			document.addEventListener("keydown", listener);
+		return () => document.removeEventListener("keydown", listener);
+	}, [handleSubmit]);
 
 	return (
 		<div className={"note-bar " + (state.open ? "active" : "")}>

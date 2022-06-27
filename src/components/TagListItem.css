@@ -48,13 +48,22 @@
 	padding: .25rem .75rem;
 	background: rgba(0, 0, 0, 0.05);
 	border-radius: .33rem;
+	transition: background .15s;
 	cursor: pointer;
 	-webkit-user-select: none;
 	   -moz-user-select: none;
 	        user-select: none;
 }
 
+.tag-list-item__button:hover {
+	background: rgba(0, 0, 0, 0.1);
+}
+
 .tag-list-item__button-submit {
 	color: white;
 	background: #2c2c2c;
+}
+
+.tag-list-item__button-submit:hover {
+	background: #101010;
 }

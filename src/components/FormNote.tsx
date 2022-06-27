@@ -35,6 +35,9 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 		editNote(dispatch, id, title, description);
 
 	const handleSubmit = () => {
+		if (title.length === 0 || description.length === 0)
+			return;
+
 		if (type === "EDIT" && id && notes.find(x => x.id! === id!))
 			onEditAction(id, title, description)
 		else
@@ -42,6 +45,16 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 
 		onClose!();
 	}
+
+	useEffect(() => {
+		const listener = (e: KeyboardEvent) => {
+			if (e.ctrlKey && e.key === "Enter")
+				handleSubmit();
+		}
+
+		document.addEventListener("keydown", listener);
+		return () => document.removeEventListener("keydown", listener);
+	}, [handleSubmit]);
 
 	return (
 		<>
