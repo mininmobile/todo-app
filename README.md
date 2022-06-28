@@ -21,7 +21,7 @@ This is an example todo app made with;
 **total of all days** ≈ 30 hours 33 minutes
 
 * **research** consisted of relearning react (it's been a while) as well as getting to grips with redux and typescript
-* **sprint**s are amounts of times i dedicated to coding exclusively
+* **sprint**s are amounts of times i spent actively developing the project
 * **document**ation is the amount of time i spent writing this readme and documenting the code
 
 ## set up
@@ -44,13 +44,15 @@ npm i
 open two terminals, one for `json-server -p 3001 db.json` and one for `npm start`
 
 # screenshots
-creating/editing notes
+> if the gifs look particularily choppy to you it is because i have smooth scrolling disabled in firefox, i find it distracting
+
+## creating/editing notes
 ![](https://raw.githubusercontent.com/mininmobile/todo-app/master/docs/note-view.gif)
 
-searching notes
+## searching notes
 ![](https://raw.githubusercontent.com/mininmobile/todo-app/master/docs/note-search.gif)
 
-managing tags
+## managing tags
 ![](https://raw.githubusercontent.com/mininmobile/todo-app/master/docs/tag-view.gif)
 
 # bonus
@@ -58,19 +60,24 @@ managing tags
 documentation is provided via. this document and throughout the source code.
 
 ## design, animations, and ux considerations
-i followed the mockup pretty closely, but deviated from it where necessary. there have also been
+i followed the mockup pretty closely, but deviated from it where necessary. animations are kept minimal to enhance the user experience without being distracting. there have also been some other ux considerations which i feel are significant enough to list here;
 
-- instead of opening the edit dialog on click, it can be accessed via the action button to
+- forms can be submit via ctrl+enter
+- instead of opening the edit dialog on click, it can be accessed via the action button to allow the user to, for example, search for a previous note while creating a new one and select text from it to paste.
+- the container has extra margin on the bottom to provide a more comfortable viewing experience
+- dropdown menus have extra margin on the bottom to allow mobile users to more comfortably scroll it into view if, for instance, one is opened from the bottom-most note
+- the search bar widens when it is active (text is entered into it or a sorting mode is selected) revealing a clear button. the clear button A) resets both text and the sort mode if either are active and focuses the search bar, otherwise B) it closes out the search bar
+	- on mobile/thin portrait screens, the search bar widens to take up the entire navigation bar
 
 ## mobile availability
-the css is kept as simple as possible to make the app work on mobile devices without many media queries, there *are* still some present, but mainly just for widening containers and reducing margin/increased padding and such.
+the css is kept as simple as possible to make the app work on mobile devices without many media queries, there *are* still some present, but mainly just for widening containers and reducing margin/increasing padding and such.
 
 ## tags, filtering, and sorting
-see the **search** and **tags** section under **internals**
+see the **search** and **tags** sections under **internals**
 
 # interals
 ## search
-search functionality is provided by a `SearchProvider` component in root, which exposes the `src/contexts/SearchContext`'s Provider and attaches a [state, setState] to its value. the object contained by state is henceforth referred to as the search query;
+search functionality is provided by a `SearchProvider` component in root, which exposes the `src/contexts/SearchContext`'s Provider and attaches a [state, setState] to its value. the object contained by state is henceforth referred to as the search query/search query object/`searchQuery`;
 
 ```js
 {
@@ -87,12 +94,12 @@ tags is a list of tag ids that will be used to show only the notes with all tags
 sort defines the sorting mode:
 
 0. no sorting
-1. **titles alphabetically** ascending (a-z)
-2. **titles alphabetically** descending (z-a)
-3. **descriptions alphabetically** ascending (a-z)
-4. **descriptions alphabetically** descending (z-a)
-5. **tag amount** ascending (min-max)
-6. **tag amount** descending (max-min)
+1. **titles alphabetically** descending (a-z)
+2. **titles alphabetically** ascending (z-a)
+3. **descriptions alphabetically** descending (a-z)
+4. **descriptions alphabetically** ascending (z-a)
+5. **tag amount** descending (min-max)
+6. **tag amount** ascending (max-min)
 
 ## tags
 tags are created and edited via the tag manager (available at `/tags` or by clicking "Tags" in the navbar)
@@ -140,7 +147,7 @@ any components in angle brackets (ie. `<App dialog="new" />`) follows the same r
 ### root
 - Redux/Provider, SearchProvider, Router/BrowserRouter
 	- NavBar
-	- `<div .container>`, Routes
+	- `<div .container>`, Router/Routes
 		- `/` ⇒ `<App />`
 		- `/new` ⇒ `<App />`
 			- new note creation functionality is handled by App's NoteBar
