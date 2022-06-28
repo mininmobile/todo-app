@@ -17,6 +17,7 @@ const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
 );
 
+//, its structure is commented on in the README
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>

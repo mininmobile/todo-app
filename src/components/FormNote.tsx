@@ -6,8 +6,7 @@ import { addNote, editNote, Note } from "../reducers/noteReducer";
 
 interface FormNoteProps {
 	type: "NEW" | "EDIT",
-	// close dialog, passed when initialized as element of dialog
-	onClose?: () => void,
+	onClose?: () => void, // close dialog, passed when initialized as element of dialog
 }
 
 const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
@@ -46,6 +45,7 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 		onClose!();
 	}, [onEditAction, onNewAction, onClose, type, notes, id, title, description]);
 
+	// allow ctrl+enter for submitting the form
 	useEffect(() => {
 		const listener = (e: KeyboardEvent) => {
 			if (e.ctrlKey && e.key === "Enter")

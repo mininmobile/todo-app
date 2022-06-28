@@ -3,11 +3,13 @@ import { Tag } from "../reducers/tagReducer";
 import "./TagListItem.css";
 
 interface TagListItemProps {
-	isBar?: boolean, // if this is the taglistitem designated to creating new tags
+	// props for the taglistitem designated to create new tags
+	isBar?: boolean,
+	addTagAction?: (title: string, color: string) => void,
+	// regular taglistitem props
 	tag?: Tag,
 	editTagAction?: (id: string, title: string, color: string) => void,
 	removeTagAction?: (id: string) => void,
-	addTagAction?: (title: string, color: string) => void,
 }
 
 const TagListItem: React.FC<TagListItemProps> = ({ isBar, tag, editTagAction, removeTagAction, addTagAction }) => {
@@ -22,7 +24,7 @@ const TagListItem: React.FC<TagListItemProps> = ({ isBar, tag, editTagAction, re
 	}
 
 	const handleSubmit = () => {
-		if (title.length === 0 || color.length !== 6)
+		if (title.length === 0 || color.length !== 6) // require color and title
 			return;
 
 		isBar ? addTagAction!(title, color)
@@ -45,11 +47,15 @@ const TagListItem: React.FC<TagListItemProps> = ({ isBar, tag, editTagAction, re
 		setActive(isBar === true || title !== tag!.title || color !== tag!.color);
 
 	const handleColorChange = (e: ChangeEvent<HTMLInputElement>) => {
+		// only let the user type hexadecimal digits
 		let value = e.currentTarget.value.replace(/[^0-9a-fA-F]/g, "");
+		// let the use type and 'loop' the color
 		if (value.length === 7)
 			value = value.substring(1, 7);
+		// ensure maximum of six digits
 		if (value.length > 6)
 			value = value.substring(0, 6);
+
 		return setColor(value);
 	}
 

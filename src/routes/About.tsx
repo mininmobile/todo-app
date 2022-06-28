@@ -1,3 +1,6 @@
+/**
+ * returns a simple about page
+ */
 const About: React.FC = () => {
 	return (
 		<>

@@ -6,22 +6,24 @@ const defaultSearchQuery = { text: "", sort: 0, tags: [] };
 
 function getSortIcon(sort: number): string {
 	switch (sort) {
-		case 0: return "—";
-		case 1: case 2: return "title";
-		case 3: case 4: return "desc";
-		case 5: case 6: return "tags";
-		default: return "?"; // probably should reset sort if its icon is '?'
+		case 0: return "—"; // no sort
+		case 1: case 2: return "title"; // sorting by title text
+		case 3: case 4: return "desc"; // sorting by description text
+		case 5: case 6: return "tags"; // sotring by tags amount
+		default: return "?"; // something fucked up somewhere, reload the page lol
 	}
 }
 
 export const Searchbar: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false); // is the search bar focused
 	const { searchQuery, setSearchQuery } = useContext(SearchContext);
 
+	// let us focus the search bar input
 	const input = createRef<HTMLInputElement>();
 
+	// reset the search query if not in the notes view
 	useEffect(() => {
 		if (location.pathname !== "/" && location.pathname !== "/new")
 			setSearchQuery(defaultSearchQuery); // onBlur event executes setOpen(false) for us
@@ -39,6 +41,7 @@ export const Searchbar: React.FC = () => {
 
 	return (
 		<div className={"searchbar " + (open || searchQuery.text.length > 0 || searchQuery.sort > 0 ? "active" : "")}
+			// focus the search bar if the user clicked outside of it, but only if directly on the background of the search bar
 			onClick={(e) => e.currentTarget === e.target ? input.current?.focus() : null}>
 			<input ref={input} className="searchbar__input" type="text"
 				// if there is a text in the searchbar, use it as the value
@@ -58,12 +61,10 @@ export const Searchbar: React.FC = () => {
 			<div className={"searchbar__sort" + (searchQuery.sort > 0 ?
 					(searchQuery.sort % 2 === 0 ? " ascending" : " descending") : "")}
 				children={getSortIcon(searchQuery.sort)}
-				onClick={() => {
-						setSearchQuery({
-							...searchQuery,
-							sort: searchQuery.sort === 6 ? 0 : (searchQuery.sort + 1)
-					})
-				}} />
+				onClick={() => setSearchQuery({
+					...searchQuery,
+					sort: searchQuery.sort >= 6 ? 0 : (searchQuery.sort + 1) // 'paginate' sort mode
+				})} />
 		</div>
 	);
 }

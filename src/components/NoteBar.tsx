@@ -11,12 +11,18 @@ const defaultState = {
 	description: "",
 }
 
+/**
+ * a note-like box that expands when clicked to give a WYSIWYG-like creation experience of a note
+ *
+ * on expansion user is navigated to `/new`, on cancel/submission user is navigated back to `/`
+ */
 const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
 	const [state, setState] = useState(defaultState);
 
+	// if location is changed away from `/new` reset state
 	useEffect(() => {
 		setState(location.pathname !== "/new" ? defaultState
 			: { ...defaultState, open: true });
@@ -43,6 +49,7 @@ const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 		handleCancel(); // or rather, handle close in this case
 	}, [state, newNoteAction, handleCancel]);
 
+	// allow submit via. ctrl+enter
 	useEffect(() => {
 		const listener = (e: KeyboardEvent) => {
 			if (e.ctrlKey && e.key === "Enter")

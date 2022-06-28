@@ -1,6 +1,7 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import * as uuid from "uuid";
 
+// all fields are optional just for developer convenience, usually they would all be defined
 export interface Note {
 	id?: string,
 	title?: string,
@@ -16,7 +17,7 @@ interface NoteActionLoad {
 interface NoteActionTag {
 	type: "NOTE_TAG" | "NOTE_UNTAG" | "NOTE_UNTAG_ALL",
 	payload: {
-		id?: string,
+		id?: string, // only optional for NOTE_UNTAG_ALL
 		tagId: string,
 	},
 }
@@ -87,6 +88,7 @@ export function noteReducer(state: Note[] = InitialState, action: NoteActionLoad
 export async function fetchNotes(dispatch: Dispatch) {
 	const response = await fetch("http://localhost:3001/notes");
 	const json = await response.json();
+	
 	dispatch({
 		type: "NOTE_LOAD" + (response.ok ? "" : "_FAILED"),
 		payload: json,

@@ -4,9 +4,9 @@ import "./Menu.css";
 export type Menu = Array<[string | JSX.Element, () => void ] | "-">;
 
 interface MenuButtonProps {
-	children?: string | JSX.Element,
+	children?: string | JSX.Element, // customize the text "icon" of the button
 	className?: string,
-	righty?: boolean,
+	righty?: boolean, // it's named "righty" because it extends the dropdown to the right
 	menu: Menu,
 	setContextMenuState: React.Dispatch<React.SetStateAction<MenuDropdownProps>>,
 }

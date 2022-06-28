@@ -22,6 +22,11 @@ interface NavigationLinkProps {
 	children: React.ReactNode,
 }
 
+/**
+ * custom navigation link component as NavLink is kinda cringe
+ *
+ * if `to="/"`, the link gains `.active` at `/new` and `/edit*` as well
+ */
 const NavigationLink: React.FC<NavigationLinkProps> = ({ to, children }) => {
 	const location = useLocation();
 	const [active, setActive] = useState(false);

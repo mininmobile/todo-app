@@ -16,17 +16,20 @@ const Dialog: React.FC<DialogProps> = ({ element, open = 1 }) => {
 	const setOpen = useCallback((o: number) => setDialogState({ open: o }), []);
 
 	if (dialogState.open === 0 && open === 1)
+		// an old trick, basically we allow the element to be created without the
+		// open class, but we add it a ms later to make the css transition run
 		setTimeout(() => setOpen(1), 1);
 
 	const handleClose = () => {
 		setOpen(2);
+		// give time for the css transition to play out before removing the dialog from the page
 		setTimeout(() => navigate(-1), 300);
 	}
 
 	// close if user clicks outside the dialog
 	const handleWrapperClick: MouseEventHandler = (e) => {
 		if (e.target === e.currentTarget)
-		handleClose();
+			handleClose();
 	}
 
 	return (

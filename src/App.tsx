@@ -15,9 +15,12 @@ import NoteCard from "./components/NoteCard";
 import TagSearchbar from "./components/TagSearchbar";
 
 interface AppProps {
-	dialog?: "NEW" | "EDIT",
+	dialog?: "NEW" | "EDIT", // if set, will open the dialog
 }
 
+/**
+ * provides a view of all notes in the database, its structure is commented on in the README
+ */
 const App: React.FC<AppProps> = ({ dialog }) => {
 	const notes = useSelector<RootState, Note[]>(state => state.notes);
 	const dispatch = useDispatch();
@@ -66,7 +69,7 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 				// allow all
 				: true)
 
-		// sort types explained in `./contexts/SearchContext.tsx`
+		// if required to sort
 		if (searchQuery.sort > 0) {
 			const sort = searchQuery.sort;
 			const inverted = sort % 2 === 0;

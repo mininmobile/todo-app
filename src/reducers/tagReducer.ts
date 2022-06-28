@@ -2,6 +2,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import * as uuid from "uuid";
 import { Note, untagAllNotes } from "./noteReducer";
 
+// all fields are optional just for developer convenience, usually they would all be defined
 export interface Tag {
 	id?: string,
 	title?: string,
@@ -55,6 +56,7 @@ export function tagsReducer(state = InitialState, action: TagActionLoad | TagAct
 export async function fetchTags(dispatch: Dispatch) {
 	const response = await fetch("http://localhost:3001/tags");
 	const json = await response.json();
+
 	dispatch({
 		type: "TAG_LOAD" + (response.ok ? "" : "_FAILED"),
 		payload: json,
@@ -91,6 +93,7 @@ export async function removeTag(dispatch: Dispatch, id: string, notesState: Note
 		payload: { id },
 	});
 
+	// if the tag is successfully deleted from the database then remove it from all notes that are tagged with it
 	if (response.ok)
 		untagAllNotes(dispatch, notesState, id);
 }
