@@ -35,7 +35,7 @@ const App: React.FC<AppProps> = ({ dialog }) => {
 	const navigate = useNavigate();
 
 	// context menu stuff
-	const closedMenuState: MenuDropdownProps = { open: false, x: 0, y: 0, menu: [] }
+	const closedMenuState: MenuDropdownProps = { open: false, x: 0, y: 0, righty: false, menu: [] }
 	const [menu, setMenu] = useState(closedMenuState);
 	document.addEventListener("mouseup", (e) => {
 		if (menu.open) {

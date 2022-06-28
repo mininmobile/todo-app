@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../store";
@@ -28,13 +28,13 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 		}
 	}, [notes, id, type]);
 
-	const onNewAction = (title: string, description: string) =>
-		addNote(dispatch, title, description)
+	const onNewAction = useCallback((title: string, description: string) =>
+		addNote(dispatch, title, description), [dispatch]);
 
-	const onEditAction = (id: string, title: string, description: string,) =>
-		editNote(dispatch, id, title, description);
+	const onEditAction = useCallback((id: string, title: string, description: string,) =>
+		editNote(dispatch, id, title, description), [dispatch]);
 
-	const handleSubmit = () => {
+	const handleSubmit = useCallback(() => {
 		if (title.length === 0 || description.length === 0)
 			return;
 
@@ -44,7 +44,7 @@ const FormNote: React.FC<FormNoteProps> = ({ type, onClose }) => {
 			onNewAction(title, description);
 
 		onClose!();
-	}
+	}, [onEditAction, onNewAction, onClose, type, notes, id, title, description]);
 
 	useEffect(() => {
 		const listener = (e: KeyboardEvent) => {

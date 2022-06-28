@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 interface NoteBarProps {
@@ -29,19 +29,19 @@ const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 		}
 	}
 
-	const handleCancel = () => {
+	const handleCancel = useCallback(() => {
 		setState(defaultState);
 		if (window.location.pathname === "/new")
 			navigate("/");
-	}
+	}, [setState, navigate]);
 
-	const handleSubmit = () => {
+	const handleSubmit = useCallback(() => {
 		if (state.title.length === 0 || state.description.length === 0)
 			return;
 
 		newNoteAction(state.title, state.description);
 		handleCancel(); // or rather, handle close in this case
-	}
+	}, [state, newNoteAction, handleCancel]);
 
 	useEffect(() => {
 		const listener = (e: KeyboardEvent) => {
@@ -52,7 +52,7 @@ const NoteBar: React.FC<NoteBarProps> = ({ newNoteAction }) => {
 		if (state.open)
 			document.addEventListener("keydown", listener);
 		return () => document.removeEventListener("keydown", listener);
-	}, [handleSubmit]);
+	}, [handleSubmit, state.open]);
 
 	return (
 		<div className={"note-bar " + (state.open ? "active" : "")}>
