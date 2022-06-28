@@ -44,7 +44,14 @@ npm i
 open two terminals, one for `json-server -p 3001 db.json` and one for `npm start`
 
 # screenshots
-todo
+creating/editing notes
+![](https://raw.githubusercontent.com/mininmobile/todo-app/master/docs/note-view.gif)
+
+searching notes
+![](https://raw.githubusercontent.com/mininmobile/todo-app/master/docs/note-search.gif)
+
+managing tags
+![](https://raw.githubusercontent.com/mininmobile/todo-app/master/docs/tag-view.gif)
 
 # bonus
 ## documentation
