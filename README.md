@@ -15,10 +15,10 @@ This is an example todo app made with;
 | sprint 1 |       | 2h22m | 2h39m | 1h18m | 1h46m | 2h12m |       |
 | sprint 2 |       |       |   53m | 2h18m | 2h13m | 4h03m |       |
 | sprint 3 |       |       |       |       | 1h25m | 3h55m |       |
-| document |       |       |       |       |       |       |       |
-| total    | ~4:00 | ~4:22 | ~4:01 |  3:36 |  5:24 | 10:10 |       |
+| document |       |       |       |       |       |       | 3h00m |
+| total    | ~4:00 | ~4:22 | ~4:01 |  3:36 |  5:24 | 10:10 |  3:00 |
 
-**total of all days** ≈ 30 hours 33 minutes
+**total of all days** ≈ 33 hours 33 minutes
 
 * **research** consisted of relearning react (it's been a while) as well as getting to grips with redux and typescript
 * **sprint**s are amounts of times i spent actively developing the project
